@@ -10,7 +10,7 @@
                     {{__('Forgot password')}}
                 </h1>
 
-                <form method="POST" action="{{ route('password.update') }}">
+                <form method="POST" action="{{ route('password.store') }}">
                 @csrf
 
                     <!-- Password Reset Token -->
