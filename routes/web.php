@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\ProfileController;
+use App\Http\Controllers\TermsController;
 use App\Http\Controllers\UserController;
 use Illuminate\Support\Facades\Route;
 
@@ -20,12 +21,19 @@ Route::get('/', function () {
 });
 
 Route::middleware('auth', 'verified')->group(function () {
-    Route::view('dashboard', 'dashboard')->name('dashboard');
-    Route::view('about', 'about')->name('about');
-    Route::resource('users', UserController::class);
-    Route::get('profile', [ProfileController::class, 'show'])->name('profile.show');
-    Route::put('profile', [ProfileController::class, 'update'])->name('profile.update');
-    Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
+    Route::middleware('termsAccepted')->group(function () {
+        Route::view('dashboard', 'dashboard')->name('dashboard');
+        Route::view('about', 'about')->name('about');
+        Route::resource('users', UserController::class);
+        Route::get('profile', [ProfileController::class, 'show'])->name('profile.show');
+        Route::put('profile', [ProfileController::class, 'update'])->name('profile.update');
+        Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
+    });
+
+    Route::withoutMiddleware('termsAccepted')->group(function () {
+        Route::get('terms', [TermsController::class, 'index'])->name('terms');
+        Route::post('terms', [TermsController::class, 'store'])->name('terms.store');
+    });
 });
 
 require __DIR__.'/auth.php';
