@@ -15,14 +15,19 @@ class UserSeeder extends Seeder
      */
     public function run()
     {
-        $user = User::create([
+        $user = User::firstOrCreate([
+            'email' => 'admin@admin.com',
+        ], [
             'name' => 'admin',
             'address' => 'dullsville',
             'phone_number' => 12345678,
-            'email' => 'admin@admin.com',
             'password' => bcrypt('password'),
+            'terms_accepted' => true,
         ]);
 
         $user->assignRole('admin');
+
+        $users = User::factory()->count(5)->create();
+        $users->each(fn ($user) => $user->assignRole('user'));
     }
 }
