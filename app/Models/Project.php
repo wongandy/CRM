@@ -19,7 +19,7 @@ class Project extends Model implements HasMedia
         'description',
         'deadline',
         'client_id',
-        'user_id',
+        'team_id',
         'status',
     ];
 
@@ -28,8 +28,8 @@ class Project extends Model implements HasMedia
         return $this->belongsTo(Client::class);
     }
 
-    public function user()
+    public function team()
     {
-        return $this->belongsTo(User::class);
+        return $this->belongsTo(Team::class);
     }
 }

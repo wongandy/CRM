@@ -2,7 +2,7 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\User;
+use App\Models\Team;
 use App\Models\Client;
 use App\Models\Project;
 use App\Http\Requests\StoreProjectRequest;
@@ -17,7 +17,7 @@ class ProjectController extends Controller
      */
     public function index()
     {
-        $projects = Project::with('client', 'user')->latest()->paginate();
+        $projects = Project::with('client', 'team')->latest()->paginate();
 
         return view('projects.index', compact('projects'));
     }
@@ -29,10 +29,10 @@ class ProjectController extends Controller
      */
     public function create()
     {
-        $users = User::pluck('name', 'id');
+        $teams = Team::pluck('name', 'id');
         $clients = Client::pluck('company_name', 'id');
 
-        return view('projects.create', compact('users', 'clients'));
+        return view('projects.create', compact('teams', 'clients'));
     }
 
     /**
@@ -71,11 +71,10 @@ class ProjectController extends Controller
      */
     public function edit(Project $project)
     {
-        // dd($project->getFirstMedia());
-        $users = User::pluck('name', 'id');
+        $teams = Team::pluck('name', 'id');
         $clients = Client::pluck('company_name', 'id');
 
-        return view('projects.edit', compact('project', 'users', 'clients'));
+        return view('projects.edit', compact('project', 'teams', 'clients'));
     }
 
     /**

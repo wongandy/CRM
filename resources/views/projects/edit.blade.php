@@ -50,18 +50,18 @@
             </div>
 
             <div class="mt-4">
-                <x-input-label for="user_id" :value="__('Assigned user')" />
+                <x-input-label for="team_id" :value="__('Assigned team')" />
 
-                <select name="user_id" id="user_id" class="block mt-1 w-full">
-                    @foreach ($users as $id => $entry)
-                        <option value="{{ $id }}" @selected(old('user_id') ? old('user_id') == $id : $project->user_id == $id)>{{ $entry }}</option>
+                <select name="team_id" id="team_id" class="block mt-1 w-full">
+                    @foreach ($teams as $id => $entry)
+                        <option value="{{ $id }}" @selected(old('team_id') ? old('team_id') == $id : $project->team_id == $id)>{{ $entry }}</option>
                     @endforeach
                 </select>
-                <x-input-error :messages="$errors->get('user_id')" class="mt-2" />
+                <x-input-error :messages="$errors->get('team_id')" class="mt-2" />
             </div>
 
             <div class="mt-4">
-                <x-input-label for="user_id" :value="__('Status')" />
+                <x-input-label for="status" :value="__('Status')" />
 
                 <select name="status" id="status" class="block mt-1 w-full">
                     @foreach (App\Enums\Project\Statuses::cases() as $status)

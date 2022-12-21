@@ -32,7 +32,7 @@
                     <thead>
                     <tr class="text-xs font-semibold tracking-wide text-left text-gray-500 uppercase bg-gray-50 border-b">
                         <th class="px-4 py-3">Title</th>
-                        <th class="px-4 py-3">Assigned to</th>
+                        <th class="px-4 py-3">Assigned team</th>
                         <th class="px-4 py-3">Client</th>
                         <th class="px-4 py-3">Deadline</th>
                         <th class="px-4 py-3">Status</th>
@@ -48,7 +48,7 @@
                                 </a>
                             </td>
                             <td class="px-4 py-3 text-sm">
-                                {{ $project->user->name }}
+                                {{ $project->team->name }}
                             </td>
                             <td class="px-4 py-3 text-sm">
                                 {{ $project->client->company_name }}
