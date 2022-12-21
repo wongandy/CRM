@@ -1,13 +1,14 @@
 <?php
 
+use App\Models\Project;
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\TeamController;
 use App\Http\Controllers\UserController;
+use App\Http\Controllers\MediaController;
 use App\Http\Controllers\TermsController;
 use App\Http\Controllers\ClientController;
-use App\Http\Controllers\MediaController;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\ProjectController;
-use App\Models\Project;
 
 /*
 |--------------------------------------------------------------------------
@@ -31,6 +32,7 @@ Route::middleware('auth', 'verified')->group(function () {
         Route::resource('users', UserController::class);
         Route::resource('clients', ClientController::class);
         Route::resource('projects', ProjectController::class);
+        Route::resource('teams', TeamController::class);
 
         Route::get('profile', [ProfileController::class, 'show'])->name('profile.show');
         Route::put('profile', [ProfileController::class, 'update'])->name('profile.update');
