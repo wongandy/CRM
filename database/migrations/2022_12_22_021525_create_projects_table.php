@@ -19,7 +19,7 @@ return new class extends Migration
             $table->text('description');
             $table->date('deadline');
             $table->foreignId('client_id');
-            $table->foreignId('user_id');
+            $table->foreignId('team_id');
             $table->string('status');
             $table->timestamps();
             $table->softDeletes();
