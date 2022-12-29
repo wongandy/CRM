@@ -13,14 +13,9 @@ return new class extends Migration
      */
     public function up()
     {
-        Schema::create('projects', function (Blueprint $table) {
-            $table->id();
-            $table->string('title');
-            $table->text('description');
-            $table->date('deadline');
-            $table->foreignId('client_id');
-            $table->string('status');
-            $table->timestamps();
+        Schema::create('project_team', function (Blueprint $table) {
+            $table->foreignId('project_id');
+            $table->foreignId('team_id');
             $table->softDeletes();
         });
     }
@@ -32,6 +27,6 @@ return new class extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('projects');
+        Schema::dropIfExists('project_team');
     }
 };

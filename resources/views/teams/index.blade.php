@@ -16,6 +16,7 @@
                     <thead>
                     <tr class="text-xs font-semibold tracking-wide text-left text-gray-500 uppercase bg-gray-50 border-b">
                         <th class="px-4 py-3">Name</th>
+                        <th class="px-4 py-3">Members</th>
                         <th class="px-4 py-3">Created by</th>
                         <th class="px-4 py-3"></th>
                     </tr>
@@ -25,6 +26,9 @@
                         <tr class="text-gray-700">
                             <td class="px-4 py-3 text-sm">
                                 {{ $team->name }}
+                            </td>
+                            <td class="px-4 py-3 text-sm">
+                                {{ implode(', ', $team->members->pluck('name')->toArray()) }}
                             </td>
                             <td class="px-4 py-3 text-sm">
                                 {{ $team->user->name }}
