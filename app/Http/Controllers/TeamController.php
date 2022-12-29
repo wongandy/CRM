@@ -16,7 +16,7 @@ class TeamController extends Controller
      */
     public function index()
     {
-        $teams = Team::with('user')->latest()->paginate();
+        $teams = Team::with('user', 'members')->latest()->paginate();
 
         return view('teams.index', compact('teams'));
     }

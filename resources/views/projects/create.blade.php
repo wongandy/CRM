@@ -47,24 +47,25 @@
                 </select>
                 <x-input-error :messages="$errors->get('client_id')" class="mt-2" />
             </div>
-
+            
             <div class="mt-4">
-                <x-input-label for="team_id" :value="__('Assigned team')" />
-
-                <select name="team_id" id="team_id" class="block mt-1 w-full">
-                    @foreach ($teams as $id => $entry)
-                        <option value="{{ $id }}" {{ old('team_id') == $id ? 'selected' : '' }}>{{ $entry }}</option>
-                    @endforeach
-                </select>
-                <x-input-error :messages="$errors->get('team_id')" class="mt-2" />
+                <x-input-label for="teams" :value="__('Assigned Teams')"/>
+                @foreach ($teams as $id => $team)
+                    <div class="mt-1 inline-flex space-x-1">
+                        <input type="checkbox" name="teams[]" id="team-{{ $id }}" value="{{ $id }}" @checked(old('teams') ? in_array($id, old('teams')) : '')>
+                        <x-input-label for="team-{{ $id }}">{{ $team }}</x-input-label>
+                    </div>
+                    <br>
+                @endforeach
+                <x-input-error :messages="$errors->get('teams')" class="mt-2" />
             </div>
 
             <div class="mt-4">
                 <x-input-label for="status" :value="__('Status')" />
 
                 <select name="status" id="status" class="block mt-1 w-full">
-                    @foreach (App\Enums\Project\Statuses::cases() as $status)
-                        <option value="{{ $status->value }}" {{ old('status') == $status->value ? 'selected': ''}}>{{ $status->name }}</option>
+                    @foreach (App\Enums\Project\Statuses::options() as $label => $value)
+                        <option value="{{ $value }}" {{ old('status') == $value ? 'selected': ''}}>{{ $label }}</option>
                     @endforeach
                 </select>
                 <x-input-error :messages="$errors->get('status')" class="mt-2" />

@@ -1,17 +1,18 @@
 <?php
 
-namespace App\Enums\Project;
+namespace App\Enums\Task;
 
 use Illuminate\Support\Str;
 use Illuminate\Support\Collection;
 
 enum Statuses: string
 {
-    case OPEN           = 'open';
-    case IN_PROGRESS    = 'in progress';
-    case BLOCKED        = 'blocked';
-    case COMPLETED      = 'completed';
-    case CANCELLED      = 'cancelled';
+    case OPEN               = 'open';
+    case IN_PROGRESS        = 'in progress';
+    case PENDING            = 'pending';
+    case WAITING_FOR_CLIENT = 'waiting for client';
+    case BLOCKED            = 'blocked';
+    case CLOSED             = 'closed';
 
     public static function options(): Collection
     {

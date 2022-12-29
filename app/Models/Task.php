@@ -8,28 +8,34 @@ use Illuminate\Database\Eloquent\SoftDeletes;
 use Spatie\MediaLibrary\HasMedia;
 use Spatie\MediaLibrary\InteractsWithMedia;
 
-class Project extends Model implements HasMedia
+class Task extends Model implements HasMedia
 {
-    use HasFactory;
-    // use SoftDeletes;
     use InteractsWithMedia;
+    use HasFactory;
+    use SoftDeletes;
 
     protected $fillable = [
         'title',
         'description',
         'deadline',
-        'client_id',
-        'team_id',
         'status',
+        'project_id',
+        'team_id',
+        'user_id',
     ];
 
-    public function client()
+    public function project()
     {
-        return $this->belongsTo(Client::class);
+        return $this->belongsTo(Project::class);
     }
 
-    public function teams()
+    public function team()
     {
-        return $this->belongsToMany(Team::class);
+        return $this->belongsTo(Team::class);
+    }
+
+    public function user()
+    {
+        return $this->belongsTo(User::class);
     }
 }

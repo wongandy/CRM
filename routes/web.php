@@ -1,7 +1,7 @@
 <?php
 
-use App\Models\Project;
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\TaskController;
 use App\Http\Controllers\TeamController;
 use App\Http\Controllers\UserController;
 use App\Http\Controllers\MediaController;
@@ -33,6 +33,7 @@ Route::middleware('auth', 'verified')->group(function () {
         Route::resource('clients', ClientController::class);
         Route::resource('projects', ProjectController::class);
         Route::resource('teams', TeamController::class);
+        Route::resource('tasks', TaskController::class);
 
         Route::get('profile', [ProfileController::class, 'show'])->name('profile.show');
         Route::put('profile', [ProfileController::class, 'update'])->name('profile.update');

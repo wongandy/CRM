@@ -1,10 +1,10 @@
 <x-app-layout>
     <x-slot name="header">
-        {{ __('Projects') }}
+        {{ __('Tasks') }}
     </x-slot>
 
     <div class="mb-4 flex justify-between">
-        <a class="rounded-lg border border-transparent bg-purple-600 px-4 py-2 text-center text-sm font-medium leading-5 text-white transition-colors duration-150 hover:bg-purple-700 focus:outline-none focus:ring active:bg-purple-600 keychainify-checked" href="{{ route('projects.create') }}">
+        <a class="rounded-lg border border-transparent bg-purple-600 px-4 py-2 text-center text-sm font-medium leading-5 text-white transition-colors duration-150 hover:bg-purple-700 focus:outline-none focus:ring active:bg-purple-600 keychainify-checked" href="{{ route('tasks.create') }}">
             Create
         </a>
     </div>
@@ -32,37 +32,41 @@
                     <thead>
                     <tr class="text-xs font-semibold tracking-wide text-left text-gray-500 uppercase bg-gray-50 border-b">
                         <th class="px-4 py-3">Title</th>
+                        <th class="px-4 py-3">Project</th>
                         <th class="px-4 py-3">Assigned team</th>
-                        <th class="px-4 py-3">Client</th>
+                        <th class="px-4 py-3">Assigned user</th>
                         <th class="px-4 py-3">Deadline</th>
                         <th class="px-4 py-3">Status</th>
                         <th class="px-4 py-3"></th>
                     </tr>
                     </thead>
                     <tbody class="bg-white divide-y">
-                    @foreach($projects as $project)
+                    @foreach($tasks as $task)
                         <tr class="text-gray-700">
                             <td class="px-4 py-3 text-sm">
-                                <a href="{{ route('projects.show', $project) }}" class="text-blue-500 no-underline hover:underline">
-                                    {{ $project->title }}
+                                <a href="{{ route('tasks.show', $task) }}" class="text-blue-500 no-underline hover:underline">
+                                    {{ $task->title }}
                                 </a>
                             </td>
                             <td class="px-4 py-3 text-sm">
-                                {{ implode(', ', $project->teams->pluck('name')->toArray()) }}
+                                {{ $task->project->title }}
                             </td>
                             <td class="px-4 py-3 text-sm">
-                                {{ $project->client->company_name }}
+                                {{ $task->team->name }}
                             </td>
                             <td class="px-4 py-3 text-sm">
-                                {{ $project->deadline }}
+                                {{ $task->user->name }}
                             </td>
                             <td class="px-4 py-3 text-sm">
-                                {{ $project->status }}
+                                {{ $task->deadline }}
                             </td>
                             <td class="px-4 py-3 text-sm">
-                                <a class="rounded-lg border border-transparent bg-purple-600 px-4 py-2 text-center text-sm font-medium leading-5 text-white transition-colors duration-150 hover:bg-purple-700 focus:outline-none focus:ring active:bg-purple-600 keychainify-checked" href="{{ route('projects.edit', $project->id) }}">Edit</a>
+                                {{ $task->status }}
+                            </td>
+                            <td class="px-4 py-3 text-sm">
+                                <a class="rounded-lg border border-transparent bg-purple-600 px-4 py-2 text-center text-sm font-medium leading-5 text-white transition-colors duration-150 hover:bg-purple-700 focus:outline-none focus:ring active:bg-purple-600 keychainify-checked" href="{{ route('tasks.edit', $task->id) }}">Edit</a>
 
-                                <form action="{{ route('projects.destroy', $project) }}" method="POST" onsubmit="return confirm('Are you sure?');">
+                                <form action="{{ route('tasks.destroy', $task) }}" method="POST" onsubmit="return confirm('Are you sure?');">
                                     @csrf
                                     @method('DELETE')
 
@@ -75,7 +79,7 @@
                 </table>
             </div>
             <div class="px-4 py-3 text-xs font-semibold tracking-wide text-gray-500 uppercase bg-gray-50 border-t sm:grid-cols-9">
-                {{ $projects->links() }}
+                {{ $tasks->links() }}
             </div>
         </div>
 

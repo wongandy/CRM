@@ -17,7 +17,7 @@ class ProjectController extends Controller
      */
     public function index()
     {
-        $projects = Project::with('client', 'team')->latest()->paginate();
+        $projects = Project::with('client', 'teams')->latest()->paginate();
 
         return view('projects.index', compact('projects'));
     }
@@ -48,6 +48,8 @@ class ProjectController extends Controller
         if ($request->hasFile('upload')) {
             $project->addMedia($request->file('upload'))->toMediaCollection();
         }
+
+        $project->teams()->sync($request->input('teams'));
 
         return to_route('projects.index');
     }
@@ -92,6 +94,8 @@ class ProjectController extends Controller
             $project->addMedia($request->file('upload'))->toMediaCollection();
         }
 
+        $project->teams()->sync($request->input('teams'));
+        
         return to_route('projects.index');
     }
 
