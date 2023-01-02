@@ -51,7 +51,6 @@ class UserController extends Controller
         $this->authorize('create users');
 
         $user = User::create($request->validated() + [
-            // assign default password
             'password' => bcrypt('password')
         ]);
         
