@@ -18,6 +18,7 @@ return new class extends Migration
             $table->foreignId('project_id');
             $table->foreignId('team_id');
             $table->foreignId('user_id');
+            $table->unsignedBigInteger('created_by')->references('id')->on('users');
             $table->string('title');
             $table->text('description');
             $table->date('deadline');

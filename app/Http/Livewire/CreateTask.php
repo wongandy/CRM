@@ -8,6 +8,7 @@ use Livewire\Component;
 use Illuminate\Http\Request;
 use Illuminate\Support\Carbon;
 use App\Models\Task;
+use App\Notifications\TaskAssignedNotification;
 use Livewire\WithFileUploads;
 
 class CreateTask extends Component
@@ -15,6 +16,9 @@ class CreateTask extends Component
     use WithFileUploads;
 
     public Task $task;
+    public $teams;
+    public $members;
+    public $projects;
     public $upload;
 
     protected $rules = [
@@ -25,6 +29,7 @@ class CreateTask extends Component
         'task.project_id' => ['required'],
         'task.team_id' => ['required_with:task.project_id'],
         'task.user_id' => ['required_with:task.team_id'],
+        'task.created_by' => ['required'],
         'upload' => ['nullable'],
     ];
 
@@ -41,6 +46,7 @@ class CreateTask extends Component
         $this->projects = Project::pluck('title', 'id');
         $this->task->status = 'open';
         $this->task->project_id = '';
+        $this->task->created_by = auth()->user()->id;
     }
 
     public function render()
@@ -57,6 +63,8 @@ class CreateTask extends Component
         if ($this->upload) {
             $this->task->addMedia($this->upload)->toMediaCollection();
         }
+
+        $this->task->user->notify(new TaskAssignedNotification($this->task));
         
         return to_route('tasks.index');
     }
