@@ -7,6 +7,7 @@ use App\Models\Client;
 use App\Models\Project;
 use App\Http\Requests\StoreProjectRequest;
 use App\Http\Requests\UpdateProjectRequest;
+use App\Notifications\ProjectAssignedNotification;
 
 class ProjectController extends Controller
 {
@@ -50,6 +51,12 @@ class ProjectController extends Controller
         }
 
         $project->teams()->sync($request->input('teams'));
+
+        $project->teams->each(function ($team) use ($project) {
+            $team->members->each(function ($member) use ($project) {
+                $member->notify(new ProjectAssignedNotification($project));
+            });
+        });
 
         return to_route('projects.index');
     }

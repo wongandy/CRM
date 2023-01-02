@@ -7,6 +7,7 @@ use App\Http\Controllers\UserController;
 use App\Http\Controllers\MediaController;
 use App\Http\Controllers\TermsController;
 use App\Http\Controllers\ClientController;
+use App\Http\Controllers\NotificationController;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\ProjectController;
 
@@ -41,6 +42,12 @@ Route::middleware('auth', 'verified')->group(function () {
 
         Route::get('media/{mediaItem}/download', [MediaController::class, 'download'])->name('media.download');
         Route::delete('media/{mediaItem}/destroy', [MediaController::class, 'destroy'])->name('media.destroy');
+
+        Route::group(['prefix' => 'notifications', 'as' => 'notifications.'], function () {
+            Route::get('/', [NotificationController::class, 'index'])->name('index');
+            Route::post('/{notification}', [NotificationController::class, 'update'])->name('update');
+            Route::delete('/{notification}', [NotificationController::class, 'destroy'])->name('destroy');
+        });
     });
 
     Route::withoutMiddleware('termsAccepted')->group(function () {

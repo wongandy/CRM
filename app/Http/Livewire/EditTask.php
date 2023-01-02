@@ -13,6 +13,9 @@ class EditTask extends Component
     use WithFileUploads;
     
     public Task $task;
+    public $teams;
+    public $members;
+    public $projects;
     public $upload;
 
     protected $rules = [
@@ -23,6 +26,7 @@ class EditTask extends Component
         'task.project_id' => ['required'],
         'task.team_id' => ['required_with:task.project_id'],
         'task.user_id' => ['required_with:task.team_id'],
+        'task.created_by' => ['required'],
         'upload' => ['nullable'],
     ];
 

@@ -22,6 +22,7 @@ class Task extends Model implements HasMedia
         'project_id',
         'team_id',
         'user_id',
+        'created_by',
     ];
 
     public function project()

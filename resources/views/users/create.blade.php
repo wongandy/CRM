@@ -14,6 +14,7 @@
                          name="name"
                          class="block w-full"
                          value="{{ old('name') }}"
+                         autofocus
                          />
                 <x-input-error :messages="$errors->get('name')" class="mt-2" />
             </div>
