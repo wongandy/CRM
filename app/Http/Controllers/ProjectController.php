@@ -18,6 +18,8 @@ class ProjectController extends Controller
      */
     public function index()
     {
+        $this->authorize('view projects');
+
         $projects = Project::with('client', 'teams')->latest()->paginate();
 
         return view('projects.index', compact('projects'));
@@ -30,6 +32,8 @@ class ProjectController extends Controller
      */
     public function create()
     {
+        $this->authorize('create projects');
+
         $teams = Team::pluck('name', 'id');
         $clients = Client::pluck('company_name', 'id');
 
@@ -44,6 +48,8 @@ class ProjectController extends Controller
      */
     public function store(StoreProjectRequest $request)
     {
+        $this->authorize('create projects');
+
         $project = Project::create($request->validated());
         
         if ($request->hasFile('upload')) {
@@ -80,6 +86,8 @@ class ProjectController extends Controller
      */
     public function edit(Project $project)
     {
+        $this->authorize('edit projects');
+
         $teams = Team::pluck('name', 'id');
         $clients = Client::pluck('company_name', 'id');
 
@@ -95,6 +103,8 @@ class ProjectController extends Controller
      */
     public function update(UpdateProjectRequest $request, Project $project)
     {
+        $this->authorize('edit projects');
+
         $project->update($request->validated());
 
         if ($request->hasFile('upload')) {
@@ -114,6 +124,8 @@ class ProjectController extends Controller
      */
     public function destroy(Project $project)
     {
+        $this->authorize('delete projects');
+
         $project->delete();
         
         return to_route('projects.index');

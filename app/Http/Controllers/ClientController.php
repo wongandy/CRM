@@ -15,6 +15,8 @@ class ClientController extends Controller
      */
     public function index()
     {
+        $this->authorize('view clients');
+
         $clients = Client::latest()->paginate();
 
         return view('clients.index', compact('clients'));
@@ -27,6 +29,8 @@ class ClientController extends Controller
      */
     public function create()
     {
+        $this->authorize('create clients');
+
         return view('clients.create');
     }
 
@@ -38,6 +42,8 @@ class ClientController extends Controller
      */
     public function store(StoreClientRequest $request)
     {
+        $this->authorize('create clients');
+
         Client::create($request->validated());
 
         return to_route('clients.index');
@@ -62,6 +68,8 @@ class ClientController extends Controller
      */
     public function edit(Client $client)
     {
+        $this->authorize('edit clients');
+
         return view('clients.edit', compact('client'));
     }
 
@@ -74,6 +82,8 @@ class ClientController extends Controller
      */
     public function update(UpdateClientRequest $request, Client $client)
     {
+        $this->authorize('edit clients');
+
         $client->update($request->validated());
 
         return to_route('clients.index');
@@ -87,6 +97,8 @@ class ClientController extends Controller
      */
     public function destroy(Client $client)
     {
+        $this->authorize('delete clients');
+
         $client->delete();
         
         return to_route('clients.index');

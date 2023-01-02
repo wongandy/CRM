@@ -4,10 +4,11 @@ namespace App\Http\Controllers;
 
 use App\Models\Role;
 use App\Models\User;
+use Illuminate\View\View;
+use Illuminate\Support\Facades\Gate;
+use Illuminate\Http\RedirectResponse;
 use App\Http\Requests\StoreUserRequest;
 use App\Http\Requests\UpdateUserRequest;
-use Illuminate\Http\RedirectResponse;
-use Illuminate\View\View;
 
 class UserController extends Controller
 {
@@ -18,6 +19,8 @@ class UserController extends Controller
      */
     public function index(): View
     {
+        $this->authorize('view users');
+
         $users = User::with('roles')->latest()->paginate();
         
         return view('users.index', compact('users'));
@@ -30,6 +33,8 @@ class UserController extends Controller
      */
     public function create(): View
     {
+        $this->authorize('create users');
+
         $roles = Role::pluck('name', 'id');
 
         return view('users.create', compact('roles'));
@@ -43,6 +48,8 @@ class UserController extends Controller
      */
     public function store(StoreUserRequest $request): RedirectResponse
     {
+        $this->authorize('create users');
+
         $user = User::create($request->validated() + [
             // assign default password
             'password' => bcrypt('password')
@@ -72,6 +79,8 @@ class UserController extends Controller
      */
     public function edit(User $user): View
     {
+        $this->authorize('edit users');
+
         $roles = Role::pluck('name', 'id');
 
         return view('users.edit', compact('user', 'roles'));
@@ -86,6 +95,8 @@ class UserController extends Controller
      */
     public function update(UpdateUserRequest $request, User $user): RedirectResponse
     {
+        $this->authorize('edit users');
+
         $user->update($request->validated());
         $user->syncRoles($request->input('role'));
 
@@ -100,6 +111,8 @@ class UserController extends Controller
      */
     public function destroy(User $user): RedirectResponse
     {
+        $this->authorize('delete users');
+
         $user->delete();
         
         return to_route('users.index');

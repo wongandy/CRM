@@ -17,6 +17,8 @@ class TaskController extends Controller
      */
     public function index()
     {
+        $this->authorize('view tasks');
+
         $tasks = Task::with('project', 'team', 'user')->latest()->paginate();
         
         return view('tasks.index', compact('tasks'));
@@ -29,6 +31,8 @@ class TaskController extends Controller
      */
     public function create()
     {
+        $this->authorize('create tasks');
+
         $projects = Project::pluck('title', 'id');
 
         return view('tasks.create', compact('projects'));
@@ -53,17 +57,8 @@ class TaskController extends Controller
      */
     public function edit(Task $task)
     {
-        return view('tasks.edit', compact('task'));
-    }
+        $this->authorize('create tasks');
 
-    /**
-     * Remove the specified resource from storage.
-     *
-     * @param  \App\Models\Task  $task
-     * @return \Illuminate\Http\Response
-     */
-    public function destroy(Task $task)
-    {
-        //
+        return view('tasks.edit', compact('task'));
     }
 }

@@ -16,6 +16,8 @@ class TeamController extends Controller
      */
     public function index()
     {
+        $this->authorize('view teams');
+
         $teams = Team::with('user', 'members')->latest()->paginate();
 
         return view('teams.index', compact('teams'));
@@ -28,6 +30,8 @@ class TeamController extends Controller
      */
     public function create()
     {
+        $this->authorize('create teams');
+
         $members = User::pluck('name', 'id');
 
         return view('teams.create', compact('members'));
@@ -41,6 +45,8 @@ class TeamController extends Controller
      */
     public function store(StoreTeamRequest $request)
     {
+        $this->authorize('create teams');
+
         $team = Team::create($request->only('name') + ['user_id' => auth()->user()->id]);
         $team->members()->sync($request->input('members'));
 
@@ -66,6 +72,8 @@ class TeamController extends Controller
      */
     public function edit(Team $team)
     {
+        $this->authorize('edit teams');
+
         $members = User::pluck('name', 'id');
 
         return view('teams.edit', compact('team', 'members'));
@@ -80,6 +88,8 @@ class TeamController extends Controller
      */
     public function update(UpdateTeamRequest $request, Team $team)
     {
+        $this->authorize('edit teams');
+
         $team->update($request->only('name'));
         $team->members()->sync($request->input('members'));
 
@@ -94,6 +104,8 @@ class TeamController extends Controller
      */
     public function destroy(Team $team)
     {
+        $this->authorize('delete teams');
+
         $team->delete();
 
         return to_route('teams.index');

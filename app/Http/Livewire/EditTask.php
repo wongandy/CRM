@@ -7,9 +7,11 @@ use App\Models\Team;
 use App\Models\Project;
 use Livewire\Component;
 use Livewire\WithFileUploads;
+use Illuminate\Foundation\Auth\Access\AuthorizesRequests;
 
 class EditTask extends Component
 {
+    use AuthorizesRequests;
     use WithFileUploads;
     
     public Task $task;
@@ -54,6 +56,8 @@ class EditTask extends Component
 
     public function updateTask()
     {
+        $this->authorize('edit tasks');
+
         $this->validate();
 
         $this->task->save();

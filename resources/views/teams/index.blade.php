@@ -3,11 +3,13 @@
         {{ __('Teams') }}
     </x-slot>
 
-    <div class="mb-4 flex justify-between">
-        <a class="rounded-lg border border-transparent bg-purple-600 px-4 py-2 text-center text-sm font-medium leading-5 text-white transition-colors duration-150 hover:bg-purple-700 focus:outline-none focus:ring active:bg-purple-600 keychainify-checked" href="{{ route('teams.create') }}">
-            Create
-        </a>
-    </div>
+    @can('create teams')
+        <div class="mb-4 flex justify-between">
+            <a class="rounded-lg border border-transparent bg-purple-600 px-4 py-2 text-center text-sm font-medium leading-5 text-white transition-colors duration-150 hover:bg-purple-700 focus:outline-none focus:ring active:bg-purple-600 keychainify-checked" href="{{ route('teams.create') }}">
+                Create
+            </a>
+        </div>
+    @endcan
 
     <div class="p-4 bg-white rounded-lg shadow-xs">
         <div class="overflow-hidden mb-8 w-full rounded-lg border shadow-xs">
@@ -22,29 +24,33 @@
                     </tr>
                     </thead>
                     <tbody class="bg-white divide-y">
-                    @foreach($teams as $team)
-                        <tr class="text-gray-700">
-                            <td class="px-4 py-3 text-sm">
-                                {{ $team->name }}
-                            </td>
-                            <td class="px-4 py-3 text-sm">
-                                {{ implode(', ', $team->members->pluck('name')->toArray()) }}
-                            </td>
-                            <td class="px-4 py-3 text-sm">
-                                {{ $team->user->name }}
-                            </td>
-                            <td class="px-4 py-3 text-sm">
-                                <a class="rounded-lg border border-transparent bg-purple-600 px-4 py-2 text-center text-sm font-medium leading-5 text-white transition-colors duration-150 hover:bg-purple-700 focus:outline-none focus:ring active:bg-purple-600 keychainify-checked" href="{{ route('teams.edit', $team->id) }}">Edit</a>
+                        @foreach($teams as $team)
+                            <tr class="text-gray-700">
+                                <td class="px-4 py-3 text-sm">
+                                    {{ $team->name }}
+                                </td>
+                                <td class="px-4 py-3 text-sm">
+                                    {{ implode(', ', $team->members->pluck('name')->toArray()) }}
+                                </td>
+                                <td class="px-4 py-3 text-sm">
+                                    {{ $team->user->name }}
+                                </td>
+                                <td class="px-4 py-3 text-sm">
+                                    @can('edit teams')
+                                        <a class="rounded-lg border border-transparent bg-purple-600 px-4 py-2 text-center text-sm font-medium leading-5 text-white transition-colors duration-150 hover:bg-purple-700 focus:outline-none focus:ring active:bg-purple-600 keychainify-checked" href="{{ route('teams.edit', $team->id) }}">Edit</a>
+                                    @endcan
 
-                                <form action="{{ route('teams.destroy', $team) }}" method="POST" onsubmit="return confirm('Are you sure?');">
-                                    @csrf
-                                    @method('DELETE')
+                                    @can('delete teams')
+                                        <form action="{{ route('teams.destroy', $team) }}" method="POST" onsubmit="return confirm('Are you sure?');">
+                                            @csrf
+                                            @method('DELETE')
 
-                                    <button type="submit" class="rounded-lg border border-transparent bg-purple-600 px-4 py-2 text-center text-sm font-medium leading-5 text-white transition-colors duration-150 hover:bg-purple-700 focus:outline-none focus:ring active:bg-purple-600 keychainify-checked">Delete</button>
-                                </form>
-                            </td>
-                        </tr>
-                    @endforeach
+                                            <button type="submit" class="rounded-lg border border-transparent bg-purple-600 px-4 py-2 text-center text-sm font-medium leading-5 text-white transition-colors duration-150 hover:bg-purple-700 focus:outline-none focus:ring active:bg-purple-600 keychainify-checked">Delete</button>
+                                        </form>
+                                    @endcan
+                                </td>
+                            </tr>
+                        @endforeach
                     </tbody>
                 </table>
             </div>
