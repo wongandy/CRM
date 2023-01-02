@@ -15,7 +15,7 @@ class UserSeeder extends Seeder
      */
     public function run()
     {
-        $user = User::firstOrCreate([
+        $admin = User::firstOrCreate([
             'email' => 'admin@admin.com',
         ], [
             'name' => 'admin',
@@ -25,7 +25,19 @@ class UserSeeder extends Seeder
             'terms_accepted' => true,
         ]);
 
-        $user->assignRole('admin');
+        $admin->assignRole('admin');
+
+        $manager = User::firstOrCreate([
+            'email' => 'manager@manager.com',
+        ], [
+            'name' => 'manager',
+            'address' => 'manager street',
+            'phone_number' => 12345678,
+            'password' => bcrypt('password'),
+            'terms_accepted' => true,
+        ]);
+
+        $manager->assignRole('manager');
 
         $users = User::factory()->count(20)->create();
         $users->each(fn ($user) => $user->assignRole('user'));

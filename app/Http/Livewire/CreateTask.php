@@ -2,17 +2,19 @@
 
 namespace App\Http\Livewire;
 
+use App\Models\Task;
 use App\Models\Team;
 use App\Models\Project;
 use Livewire\Component;
 use Illuminate\Http\Request;
-use Illuminate\Support\Carbon;
-use App\Models\Task;
-use App\Notifications\TaskAssignedNotification;
 use Livewire\WithFileUploads;
+use Illuminate\Support\Carbon;
+use App\Notifications\TaskAssignedNotification;
+use Illuminate\Foundation\Auth\Access\AuthorizesRequests;
 
 class CreateTask extends Component
 {
+    use AuthorizesRequests;
     use WithFileUploads;
 
     public Task $task;
@@ -56,6 +58,8 @@ class CreateTask extends Component
 
     public function storeTask()
     {
+        $this->authorize('create tasks');
+
         $this->validate();
 
         $this->task->save();
