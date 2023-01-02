@@ -22,6 +22,8 @@
 
         <x-dropdown>
             <x-slot name="trigger">
+                <a href="{{ route('notifications.index') }}" class="align-middle rounded-full focus:shadow-outline-purple focus:outline-none mr-5">Notifications</a>
+                
                 <button
                     class="align-middle rounded-full focus:shadow-outline-purple focus:outline-none"
                     @click="toggleProfileMenu"
