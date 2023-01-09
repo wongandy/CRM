@@ -11,6 +11,10 @@ A customer relationship management web app that is capable of managing a company
 - Managers can create projects and assign tasks to agents
 - Agents work on tasks assigned to them
 
+## Screenshots
+![create_project](https://user-images.githubusercontent.com/3273498/211235906-cda80acc-2aa0-4c10-a19b-f60d5ae11776.png)
+![notification](https://user-images.githubusercontent.com/3273498/211235919-4e4d6bbf-77f3-41dd-995d-423591d34449.png)
+
 ## Tech Stack
 
 **Front-end framework:** TailwindCSS
