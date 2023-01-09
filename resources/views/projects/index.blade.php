@@ -51,7 +51,7 @@
                                     @endcan
 
                                     @can('delete projects')
-                                        <form action="{{ route('projects.destroy', $project) }}" method="POST" onsubmit="return confirm('Are you sure?');">
+                                        <form action="{{ route('projects.destroy', $project) }}" class="inline-block" method="POST" onsubmit="return confirm('Are you sure?');">
                                             @csrf
                                             @method('DELETE')
 

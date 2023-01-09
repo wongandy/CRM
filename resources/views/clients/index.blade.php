@@ -41,7 +41,7 @@
                                     @endcan
 
                                     @can('delete clients')
-                                        <form action="{{ route('clients.destroy', $client) }}" method="POST" onsubmit="return confirm('Are you sure?');">
+                                        <form action="{{ route('clients.destroy', $client) }}" class="inline-block" method="POST" onsubmit="return confirm('Are you sure?');">
                                             @csrf
                                             @method('DELETE')
 

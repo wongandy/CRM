@@ -55,7 +55,7 @@
                                     @endcan
 
                                     @can('delete tasks')
-                                        <form action="{{ route('tasks.destroy', $task) }}" method="POST" onsubmit="return confirm('Are you sure?');">
+                                        <form action="{{ route('tasks.destroy', $task) }}" class="inline-block" method="POST" onsubmit="return confirm('Are you sure?');">
                                             @csrf
                                             @method('DELETE')
 

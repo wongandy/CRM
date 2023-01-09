@@ -41,7 +41,7 @@
                                     @endcan
 
                                     @can('delete teams')
-                                        <form action="{{ route('teams.destroy', $team) }}" method="POST" onsubmit="return confirm('Are you sure?');">
+                                        <form action="{{ route('teams.destroy', $team) }}" class="inline-block" method="POST" onsubmit="return confirm('Are you sure?');">
                                             @csrf
                                             @method('DELETE')
 
